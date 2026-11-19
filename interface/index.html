@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brasil de ponta a ponta</title>
+<!-- Importa o mapa do OpenStreetMap, é ele que faz o mapa aparecer -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>🇧🇷 BRASIL DE PONTA A PONTA</h1>
+    <!-- Você pediu pra trocar o texto de cima -->
+    <p>Viagens perfeitas para você ✨</p>
+</header>
+
+<main>
+<!-- Menu principal, cada botão leva pra uma parte diferente -->
+<div class="tabs">
+    <button id="t1" class="ativo" onclick="aba('motoristas')">👨‍✈️ Motoristas</button>
+    <button id="t2" onclick="aba('passageiro')">🧑 Passageiros</button>
+    <button id="t3" onclick="aba('corrida')">🗺️ Solicitar</button>
+    <button id="t4" onclick="aba('mapa')">🚕 Mapa Ao Vivo</button>
+    <button id="t5" onclick="aba('historico')">📜 Histórico</button>
+</div>
+
+<!-- Parte dos motoristas, aqui que escolhe quem vai dirigir -->
+<section id="aba-motoristas" class="card">
+    <h2>Motoristas disponíveis</h2>
+    <div id="lista-motoristas" class="grid"></div>
+    
+    <h3>➕ Cadastrar motorista</h3>
+    <label>Nome</label><input id="m-nome">
+    <label>Placa</label><input id="m-placa">
+    <label>Tipo</label>
+    <select id="m-tipo">
+        <option value="">Selecione</option>
+        <option>ECONOMY</option>
+        <option>COMFORT</option>
+        <option>BLACK</option>
+    </select>
+    <button class="btn" onclick="addMotorista()">Cadastrar</button>
+</section>
+
+<!-- Cadastro do passageiro -->
+<section id="aba-passageiro" class="card hidden">
+    <h2>🧑 Passageiros</h2>
+    <label>Nome</label><input id="p-nome">
+    <label>CPF</label><input id="p-cpf" maxlength="11">
+    <button class="btn" onclick="addPassageiro()">Cadastrar</button>
+    <div id="lista-passageiros"></div>
+    <br>
+    <button class="btn" style="background:#009c3b" onclick="aba('corrida')">Continuar para corrida →</button>
+</section>
+
+<!-- Aqui pede a corrida -->
+<section id="aba-corrida" class="card hidden">
+    <h2>🗺️ Para onde vamos?</h2>
+    <label>CPF</label><input id="c-cpf">
+    <label>Origem</label><input id="c-origem">
+    <label>Destino</label><input id="c-destino">
+    <label>Distância: <span id="kmLabel">50</span> KM</label>
+    <input id="c-dist" type="range" min="1" max="3000" value="50">
+    <div id="previa"></div>
+    <label>Tipo</label><select id="c-tipo"><option>ECONOMY</option><option>COMFORT</option><option>BLACK</option></select>
+    <div id="motoristas-disponiveis" class="grid"></div>
+    <button class="btn" onclick="solicitar()">🚀 Solicitar - R$ <span id="valorBtn">0</span></button>
+    <div id="msg-c"></div>
+</section>
+
+<!-- Mapa onde o carrinho anda -->
+<section id="aba-mapa" class="card hidden">
+    <h2>🚕 Seu táxi no mapa</h2>
+    <div id="infoCorrida">Nenhuma corrida ativa</div>
+    <div id="map" style="height:500px;border-radius:16px;border:2px solid #153e84"></div>
+    <div style="display:flex;gap:10px;margin-top:10px">
+        <div class="card" style="flex:1"><b>⏱️ Tempo</b><div id="tempoMapa" class="cronometro">--</div></div>
+        <div class="card" style="flex:1"><b>💰 Valor</b><div id="valorMapa" class="cronometro">--</div></div>
+    </div>
+    <div class="progress"><i id="progMapa" style="width:0%"></i></div>
+</section>
+
+<section id="aba-historico" class="card hidden"><h2>📜 Histórico</h2><div id="hist"></div></section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
